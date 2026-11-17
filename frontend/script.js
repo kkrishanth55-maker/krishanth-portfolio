@@ -21,7 +21,7 @@ contactForm.addEventListener("submit", async function (event) {
     const statusMessage = document.getElementById("statusMessage");
 
     const formData = {
-        access_key: "c90c98d9-6789-48a3-a785-93b1e7de1d27",
+        access_key: "8fcdbf84-4ffa-44ac-8665-cbf04d773fb8",
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
         message: document.getElementById("message").value,
