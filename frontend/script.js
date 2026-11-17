@@ -11,7 +11,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
 });
 
-// Contact form - Flask backend connection
+// Contact form - Web3Forms
 const contactForm = document.getElementById("contactForm");
 
 contactForm.addEventListener("submit", async function (event) {
@@ -21,9 +21,11 @@ contactForm.addEventListener("submit", async function (event) {
     const statusMessage = document.getElementById("statusMessage");
 
     const formData = {
+        access_key: "c90c98d9-6789-48a3-a785-93b1e7de1d27",
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
-        message: document.getElementById("message").value
+        message: document.getElementById("message").value,
+        subject: "New Portfolio Contact Message"
     };
 
     button.disabled = true;
@@ -31,25 +33,26 @@ contactForm.addEventListener("submit", async function (event) {
     statusMessage.textContent = "";
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/contact", {
+        const response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             },
             body: JSON.stringify(formData)
         });
 
         const result = await response.json();
 
-        if (!response.ok || result.status !== "success") {
+        if (!response.ok || !result.success) {
             throw new Error(result.message || "Unable to send message");
         }
 
-        statusMessage.textContent = "Message submitted successfully!";
+        statusMessage.textContent = "Message sent successfully!";
         contactForm.reset();
 
     } catch (error) {
-        statusMessage.textContent = error.message;
+        statusMessage.textContent = "Failed to send message. Please try again.";
         console.error(error);
 
     } finally {
